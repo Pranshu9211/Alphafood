@@ -8,7 +8,7 @@ const defaultFoodItems = [
   { name: 'Pesto Chicken Pizza', price: 429, image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&h=450&fit=crop', category: 'Pizza', description: 'Fresh pesto base with grilled chicken, cherry tomatoes, and pine nuts.' },
 
   // --- BURGER ---
-  { name: 'Classic Empire Burger', price: 199, image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&h=450&fit=crop', category: 'Burger', description: 'Signature beef patty, aged cheddar, secret sauce, and garden-fresh greens.' },
+  { name: 'Classic Empire Burger', price: 199, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=450&fit=crop', category: 'Burger', description: 'Signature beef patty, aged cheddar, secret sauce, and garden-fresh greens.' },
   { name: 'Monster Double Smash', price: 349, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&h=450&fit=crop', category: 'Burger', description: 'Two hand-smashed patties with caramelized onions and double cheese.' },
   { name: 'Crispy Zinger Pro', price: 249, image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee15d?w=600&h=450&fit=crop', category: 'Burger', description: 'Spicy fried chicken fillet with creamy slaw and pickles.' },
   { name: 'Guacamole Bacon Burger', price: 399, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&h=450&fit=crop', category: 'Burger', description: 'Fresh guacamole, crispy bacon, and pepper jack cheese.' },
@@ -27,7 +27,7 @@ const defaultFoodItems = [
   { name: 'Molten Lava Cake', price: 179, image: 'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=600&h=450&fit=crop', category: 'Desserts', description: 'Warm chocolate cake with a gooey dark chocolate center.' },
   { name: 'NY Raspberry Cheesecake', price: 249, image: 'https://images.unsplash.com/photo-1567171466295-4afa63d45416?w=600&h=450&fit=crop', category: 'Desserts', description: 'Rich cheesecake with a buttery crust and fresh raspberry coulis.' },
   { name: 'Exotic Fruit Sundae', price: 199, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=450&fit=crop', category: 'Desserts', description: 'Vanilla bean ice cream with seasonal tropical fruits and nuts.' },
-  { name: 'Belgian Waffle Tower', price: 229, image: 'https://images.unsplash.com/photo-1562331750-58d0b6fb8826?w=600&h=450&fit=crop', category: 'Desserts', description: 'Fluffy waffles topped with Nutella, bananas, and whipped cream.' },
+  { name: 'Belgian Waffle Tower', price: 229, image: 'https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=600&h=450&fit=crop', category: 'Desserts', description: 'Fluffy waffles topped with Nutella, bananas, and whipped cream.' },
   { name: 'Tiramisu Classico', price: 279, image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&h=450&fit=crop', category: 'Desserts', description: 'Authentic Italian tiramisu with coffee-soaked ladyfingers.' },
   { name: 'Red Velvet Pastry', price: 159, image: 'https://images.unsplash.com/photo-1616031037011-087000171abe?w=600&h=450&fit=crop', category: 'Desserts', description: 'Velvety red sponge with smooth cream cheese frosting.' },
 
