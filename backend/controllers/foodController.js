@@ -1,5 +1,17 @@
 const Food = require('../models/Food');
 const cloudinary = require('../config/cloudinary');
+const defaultFoodItems = require('../config/defaultData');
+
+// Secret force seed route
+const forceSeed = async (req, res) => {
+  try {
+    await Food.deleteMany({});
+    await Food.insertMany(defaultFoodItems);
+    res.json({ message: 'Database seeded successfully with 40+ items!', count: defaultFoodItems.length });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // GET /api/food
 const getFoods = async (req, res) => {
@@ -77,4 +89,4 @@ const deleteFood = async (req, res) => {
   }
 };
 
-module.exports = { getFoods, addFood, updateFood, deleteFood, uploadFoodImage };
+module.exports = { getFoods, addFood, updateFood, deleteFood, uploadFoodImage, forceSeed };
