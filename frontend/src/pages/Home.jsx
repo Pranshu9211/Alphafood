@@ -1,4 +1,5 @@
 import Hero from '../components/Hero';
+import TrendingSection from '../components/TrendingSection';
 import FeaturedSection from '../components/FeaturedSection';
 import GallerySection from '../components/GallerySection';
 import TestimonialsSection from '../components/TestimonialsSection';
@@ -9,6 +10,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <Hero />
+      <TrendingSection />
       <FeaturedSection />
       <GallerySection />
       <TestimonialsSection />
