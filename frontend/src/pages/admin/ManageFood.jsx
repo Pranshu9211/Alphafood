@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiUpload, FiLoader } from 'react-icons/fi';
 import './ManageUsers.css'; // Reusing premium table styles
 
 const emptyForm = { name: '', price: '', image: '', category: 'Pizza', description: '' };
@@ -12,6 +12,8 @@ const ManageFood = () => {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState(emptyForm);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef(null);
 
   const fetchFoods = async () => {
     try {
@@ -28,6 +30,27 @@ const ManageFood = () => {
 
   const openAdd = () => { setEditId(null); setForm(emptyForm); setShowModal(true); };
   const openEdit = (food) => { setEditId(food._id); setForm({ name: food.name, price: food.price, image: food.image, category: food.category, description: food.description || '' }); setShowModal(true); };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setUploading(true);
+    try {
+      const res = await axios.post('/api/food/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setForm(prev => ({ ...prev, image: res.data.imageUrl }));
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,23 +142,51 @@ const ManageFood = () => {
       {/* Modal */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)} style={{ zIndex: 9999 }}>
-          <div className="modal-content glass-panel" onClick={e => e.stopPropagation()} style={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div className="modal-content glass-panel" onClick={e => e.stopPropagation()} style={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', maxWidth: '500px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>{editId ? 'Edit Food Item' : 'Add Food Item'}</h2>
               <button className="icon-btn" onClick={() => setShowModal(false)}><FiX size={24} /></button>
             </div>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Name</label>
-                <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+              <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                <div style={{ position: 'relative' }}>
+                  <div style={{ width: '120px', height: '120px', borderRadius: '16px', overflow: 'hidden', background: 'rgba(255,255,255,0.05)', border: '2px dashed rgba(255,255,255,0.2)' }}>
+                    {form.image ? (
+                      <img src={form.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)' }}>No Image</div>
+                    )}
+                    {uploading && (
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <FiLoader className="spin" size={24} />
+                      </div>
+                    )}
+                  </div>
+                  <button 
+                    type="button" 
+                    className="btn btn-secondary" 
+                    style={{ position: 'absolute', bottom: '-10px', right: '-10px', padding: '8px', borderRadius: '50%', minWidth: 'auto', background: 'var(--accent)', border: 'none' }}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <FiUpload size={14} />
+                  </button>
+                  <input type="file" ref={fileInputRef} onChange={handleImageUpload} style={{ display: 'none' }} accept="image/*" />
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Name</label>
+                    <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Price (₹)</label>
+                    <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} required />
+                  </div>
+                </div>
               </div>
+
               <div className="form-group" style={{ marginBottom: 0 }}>
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Price (₹)</label>
-                <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} required />
-              </div>
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Image URL</label>
-                <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} value={form.image} onChange={e => setForm({...form, image: e.target.value})} required />
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Image URL (Optional - will auto-fill on upload)</label>
+                <input className="form-input" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)' }} value={form.image} onChange={e => setForm({...form, image: e.target.value})} placeholder="https://..." />
               </div>
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'block' }}>Category</label>
@@ -149,7 +200,7 @@ const ManageFood = () => {
               </div>
               <div className="modal-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                 <button type="button" className="btn btn-secondary" style={{ flex: 1, background: 'rgba(255,255,255,0.05)', color: 'white' }} onClick={() => setShowModal(false)}>Cancel</button>
-                <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>{editId ? 'Update' : 'Add Item'}</button>
+                <button type="submit" className="btn btn-primary" style={{ flex: 1 }} disabled={uploading}>{editId ? 'Update' : 'Add Item'}</button>
               </div>
             </form>
           </div>

@@ -1,4 +1,5 @@
 const Food = require('../models/Food');
+const cloudinary = require('../config/cloudinary');
 
 // GET /api/food
 const getFoods = async (req, res) => {
@@ -9,6 +10,35 @@ const getFoods = async (req, res) => {
     if (search) query.name = { $regex: search, $options: 'i' };
     const foods = await Food.find(query).sort({ createdAt: -1 });
     res.json(foods);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// POST /api/food/upload (admin)
+const uploadFoodImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No image file uploaded' });
+    }
+
+    const streamUpload = (buffer) => new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'alphafoods/menu',
+          resource_type: 'image',
+          transformation: [{ width: 800, height: 600, crop: 'fill' }]
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      stream.end(buffer);
+    });
+
+    const result = await streamUpload(req.file.buffer);
+    res.json({ imageUrl: result.secure_url });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -47,4 +77,4 @@ const deleteFood = async (req, res) => {
   }
 };
 
-module.exports = { getFoods, addFood, updateFood, deleteFood };
+module.exports = { getFoods, addFood, updateFood, deleteFood, uploadFoodImage };
