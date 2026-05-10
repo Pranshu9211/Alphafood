@@ -16,11 +16,15 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: ['https://alphafood-jet.vercel.app', 'http://localhost:5173'],
+  origin: true, // Reflect the request origin back to the caller (more robust for Vercel)
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
 }));
+
+// Explicitly handle OPTIONS requests
+app.options('*', cors());
+
 app.use(express.json());
 
 // Routes
