@@ -9,10 +9,10 @@ const generateToken = (id) => {
   return jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
 };
 
-const validateName = (name) => /^[a-zA-Z]+(?: [a-zA-Z]+)*$/.test(name.trim());
+const validateName = (name) => name.trim().length >= 2;
 const validatePhone = (phone) => /^[0-9]{10}$/.test(phone.trim());
 const validatePincode = (pincode) => /^[0-9]{6}$/.test(pincode.trim());
-const validatePassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,8}$/.test(password);
+const validatePassword = (password) => password.length >= 6;
 
 const normalizeAddress = (address) => ({
   label: address.label?.trim() || 'Home',
@@ -53,7 +53,7 @@ const register = async (req, res) => {
     }
 
     if (!validatePassword(trimmedPassword)) {
-      return res.status(400).json({ message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number' });
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
     }
 
     const userExists = await User.findOne({ email: trimmedEmail });
@@ -253,7 +253,7 @@ const changePassword = async (req, res) => {
     }
 
     if (!validatePassword(newPassword)) {
-      return res.status(400).json({ message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number' });
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
     }
 
     const user = await User.findById(req.user._id);

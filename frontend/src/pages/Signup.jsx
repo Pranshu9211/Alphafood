@@ -16,7 +16,6 @@ const Signup = () => {
   const validateName = (name) => {
     const trimmed = name.trim();
     if (trimmed.length < 2) return 'Name must be at least 2 characters long';
-    if (!/^[a-zA-Z]+(?: [a-zA-Z]+)*$/.test(trimmed)) return 'Name can only contain alphabets and single spaces between words';
     return '';
   };
 
@@ -28,9 +27,7 @@ const Signup = () => {
 
   const validatePassword = (password) => {
     const trimmed = password.trim();
-    if (/^\s*$/.test(trimmed)) return 'Password cannot be only spaces';
-    if (trimmed.length < 6 || trimmed.length > 8) return 'Password must be 6-8 characters long';
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,8}$/.test(trimmed)) return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    if (trimmed.length < 6) return 'Password must be at least 6 characters long';
     return '';
   };
 
