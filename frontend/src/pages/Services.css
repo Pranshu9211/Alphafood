@@ -1,0 +1,189 @@
+/* ─────────────────────────────────────────
+   SERVICES PAGE — themed via CSS variables
+───────────────────────────────────────── */
+
+.sv-page {
+  min-height: 100vh;
+  background: var(--page-bg);
+  padding-top: var(--nav-height, 70px);
+  font-family: 'Inter', 'Outfit', sans-serif;
+  color: var(--text-hi);
+}
+
+.sv-orange { color: var(--orange); }
+
+/* ── HERO ── */
+.sv-hero {
+  background: var(--hero-grad);
+  border-bottom: 1px solid var(--hero-bdr);
+  padding: 68px 40px 60px;
+  text-align: center;
+}
+.sv-hero-inner { max-width: 680px; margin: 0 auto; }
+
+.sv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--orange-sub);
+  border: 1px solid var(--orange-bdr);
+  color: var(--orange);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-bottom: 22px;
+}
+
+.sv-hero-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 18px;
+  color: var(--text-hi);
+}
+.sv-hero-sub { color: var(--text-mid); font-size: 1rem; line-height: 1.75; margin: 0; }
+
+/* ── HIGHLIGHTS BAR ── */
+.sv-highlights {
+  display: flex;
+  justify-content: center;
+  background: var(--stats-bg);
+  border-bottom: 1px solid var(--card-border);
+}
+.sv-highlight-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 52px;
+  border-right: 1px solid var(--card-border);
+  transition: background 0.2s;
+}
+.sv-highlight-item:last-child { border-right: none; }
+.sv-highlight-item:hover { background: var(--card-bg); }
+.sv-highlight-val { font-size: 1.7rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.sv-highlight-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: var(--text-lo);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ── BODY ── */
+.sv-body { max-width: 1100px; margin: 0 auto; padding: 48px 40px 80px; }
+
+/* ── SERVICES GRID ── */
+.sv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 48px; }
+
+/* ── SERVICE CARD ── */
+.sv-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 28px 24px 32px;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, background-color 0.25s;
+  cursor: default;
+}
+.sv-card:hover {
+  border-color: color-mix(in srgb, var(--sv-accent) 40%, transparent);
+  transform: translateY(-5px);
+}
+.sv-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.sv-icon-wrap {
+  width: 48px;
+  height: 48px;
+  background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sv-accent);
+  font-size: 1.2rem;
+  transition: background 0.25s;
+}
+.sv-card:hover .sv-icon-wrap { background: color-mix(in srgb, var(--sv-accent) 22%, transparent); }
+.sv-tag {
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-lo);
+  background: var(--card-bg-input);
+  border: 1px solid var(--input-border);
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+.sv-card-title { font-size: 1.05rem; font-weight: 700; margin: 0 0 10px; line-height: 1.3; color: var(--text-hi); }
+.sv-card-desc  { font-size: 0.84rem; color: var(--text-mid); line-height: 1.7; margin: 0; }
+
+.sv-card-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: var(--text-lo);
+  transition: color 0.2s, transform 0.2s;
+}
+.sv-card:hover .sv-card-arrow { color: var(--sv-accent); transform: translateX(3px); }
+
+.sv-glow {
+  position: absolute;
+  bottom: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: var(--sv-accent);
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.sv-card:hover .sv-glow { opacity: 0.06; }
+
+/* ── CTA STRIP ── */
+.sv-cta {
+  background: var(--hero-grad);
+  border: 1px solid var(--orange-bdr);
+  border-radius: 16px;
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.sv-cta-text h2 { font-size: 1.4rem; font-weight: 800; margin: 0 0 8px; color: var(--text-hi); }
+.sv-cta-text p  { color: var(--text-mid); font-size: 0.9rem; margin: 0; }
+.sv-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-2));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.sv-cta-btn:hover  { opacity: 0.88; transform: translateY(-1px); }
+.sv-cta-btn:active { transform: scale(0.98); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) { .sv-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .sv-hero { padding: 48px 20px 40px; }
+  .sv-body { padding: 32px 20px 60px; }
+  .sv-highlights { flex-wrap: wrap; }
+  .sv-highlight-item { padding: 18px 28px; width: 50%; border-right: none; border-bottom: 1px solid var(--card-border); }
+  .sv-highlight-item:nth-child(odd) { border-right: 1px solid var(--card-border); }
+  .sv-highlight-item:last-child     { border-bottom: none; }
+  .sv-cta { flex-direction: column; text-align: center; padding: 32px 24px; }
+}
+@media (max-width: 540px) { .sv-grid { grid-template-columns: 1fr; } }

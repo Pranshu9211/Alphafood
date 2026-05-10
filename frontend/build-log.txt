@@ -1,0 +1,25 @@
+
+> frontend@0.0.0 build
+> vite build
+
+[36mvite v8.0.10 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...G£ô 138 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.78 kB Göé gzip:   0.46 kB
+dist/assets/foodie2-CRtD1u8U.jpg                    6.39 kB
+dist/assets/foodie3-CB9aThXH.jpg                    6.45 kB
+dist/assets/foodie1-BLhu9fW0.jpg                    6.52 kB
+dist/assets/pasta-VICp8mci.avif                    42.23 kB
+dist/assets/Pepperoni Pizza-ChBQosRA.avif          60.62 kB
+dist/assets/Gourmet Plated Dish-4Cm8UBe2.avif      76.29 kB
+dist/assets/Burger Supreme-Cbg2DiQ7.avif          116.25 kB
+dist/assets/Jamie Oliver-DM4vI4TE.jpg           2,345.87 kB
+dist/assets/Marcus Vance-BI05mg39.jpg           3,480.71 kB
+dist/assets/Gordon-Dtt0wCGT.jpg                 4,153.58 kB
+dist/assets/Pannertikka-BdWbDaO4.jpg           15,005.64 kB
+dist/assets/index-Bit4swId.css                     76.00 kB Göé gzip:  13.68 kB
+dist/assets/index-vTAdicIn.js                     368.19 kB Göé gzip: 110.48 kB
+
+[32mG£ô built in 506ms[39m
