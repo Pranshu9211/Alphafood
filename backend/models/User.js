@@ -6,14 +6,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a name'],
     trim: true,
-    minlength: [2, 'Name must be at least 2 characters long'],
-    validate: {
-      validator: function(v) {
-        // Only alphabets and spaces, no multiple spaces
-        return /^[a-zA-Z]+(?: [a-zA-Z]+)*$/.test(v);
-      },
-      message: 'Name can only contain alphabets and single spaces between words'
-    }
+    minlength: [2, 'Name must be at least 2 characters long']
   },
   email: {
     type: String,
@@ -32,15 +25,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please add a password'],
-    minlength: [6, 'Password must be at least 6 characters long'],
-    maxlength: [8, 'Password must be at most 8 characters long'],
-    validate: {
-      validator: function(v) {
-        // At least one uppercase, one lowercase, one number
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,8}$/.test(v);
-      },
-      message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-    }
+    minlength: [6, 'Password must be at least 6 characters long']
   },
   profileImage: {
     type: String,
